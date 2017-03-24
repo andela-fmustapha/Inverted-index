@@ -1,0 +1,37 @@
+{
+  "name": "inverted-index",
+  "version": "1.0.0",
+  "description": "An application that builds an index from books in a file and allows you search through the file for words in the book.",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andela-fmustapha/inverted-index.git"
+  },
+  "keywords": [
+    "\"es6\"",
+    "\"angularjs\"",
+    "\"javascript\""
+  ],
+  "author": "Faith Mustapha",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andela-fmustapha/inverted-index/issues"
+  },
+  "homepage": "https://github.com/andela-fmustapha/inverted-index#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^3.0.1",
+    "gulp-util": "latest",
+    "gulp-nodemon": "^2.2.1",
+    "gulp-connect": "latest",
+    "jasmine": "^2.5.3",
+    "jasmine-core": "^2.5.2",
+    "karma-jasmine": "^0.1.0"
+  },
+  "dependencies": {
+    "gulp-util": "^3.0.8"
+  }
+}
