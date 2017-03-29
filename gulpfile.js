@@ -1,0 +1,22 @@
+const gulp = require('gulp');
+const browserSync = require('browser-sync').create();
+
+const reload = browserSync.reload;
+
+gulp.task('watch', () => {
+  gulp.watch('src/css/style.css', reload);
+  gulp.watch('./gulpfile.js', reload);
+  gulp.watch('src/js/*.js', reload);
+  gulp.watch('src/index.html', reload);
+});
+
+gulp.task('browser-sync', () => {
+  browserSync.init({
+    server: {
+      baseDir: './src'
+    },
+    port: 3010,
+  });
+});
+
+gulp.task('default', ['watch', 'browser-sync']);
