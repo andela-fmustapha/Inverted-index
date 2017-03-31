@@ -8,7 +8,7 @@ app.controller('index', ['$scope', 'alertFactory', ($scope, alertFactory) => {
       'Allow Users search through all indexed files';
 
   $scope.result = 'not done yet';
-  $scope.content = [];
+  $scope.content = {};
   $scope.filename = [];
     // $scope.allFiles;
     // let allFiles = [];
@@ -30,11 +30,16 @@ app.controller('index', ['$scope', 'alertFactory', ($scope, alertFactory) => {
         goodExt.push(eachFile.name);
         invertedIndex.readFile(eachFile).then((response) => {
           console.log(response,'response');
-          $scope.content.push(response);
-          $scope.filename.push(eachFile.name);
+          if (invertedIndex.validateFile(response)){
+          $scope.content[eachFile.name] = response;
+        }
+        else{
+          console.log('bad file');
+        }
+          // $scope.filename.push(eachFile.name);
+        }).catch((error) => {
+          console.log(error);
         });
-        // $scope.content.push(invertedIndex.readFile(eachFile));
-        // console.log($scope.content);
       }
     });
     // $scope.allFiles = eachFile;
@@ -47,17 +52,20 @@ app.controller('index', ['$scope', 'alertFactory', ($scope, alertFactory) => {
   };
 
   $scope.createBookIndex = () => {
-    console.log($scope.content, 'Content of each file');
-    $scope.content.forEach((file) => {
-          // const fileContent =readGoodFiles($scope.allFiles);
-      try {
-            // const validatedContent = invertedIndex.validateFile($scope.content);
-        console.log($scope.filename, 'scope.filename');
-        $scope.fileIndices = invertedIndex.createIndex(file, $scope.filename);
-      } catch (err) {
-        console.log(err);
+    // console.log($scope.content);
+    // return;
+    //const filenames = Object.keys($scope.content);
+    Object.keys($scope.content).forEach((file) => {
+      if (invertedIndex.validateFile($scope.content[file].index)) {
+        try {
+          console.log($scope.filename, 'scope.filename');
+          $scope.fileIndices = invertedIndex.createIndex(file, $scope.filename);
+        } catch (err) {
+          console.log(err);
+        }
+        return $scope.fileIndices;
       }
-      return $scope.fileIndices;
+      return 'Your file is not in the right structure';
     });
   };
 

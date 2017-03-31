@@ -21,16 +21,13 @@ class InvertedIndex {
   }
 
   validateFile(jsonContent) {
-    let isValid = false;
+    let isValid = true;
     jsonContent.forEach((doc) => {
-      if (doc.title && doc.text) {
-        isValid = true;
-      } else {
+      if (!doc.title || !doc.text) {
         isValid = false;
       }
-      return isValid;
     });
-    // return valid;
+    return isValid;
   }
 
   static unique(array) {

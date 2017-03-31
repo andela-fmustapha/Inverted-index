@@ -30,7 +30,8 @@
         </div>
         <div id='selectBooks'>
             <label>Select Book:</label>
-            <select id="bookList" ng-options="file as file.name for file in allFiles track by $index" ng-model="selectedFile">
+            <select id="bookList" ng-model="selectedFile">
+             <option ng-repeat="(filename, filecontent) in content"> {{ filename }}</option>
              </select>
             <span>
             Search words:<input type="search" id="search" name="search" file-model = "myFile" value="e.g. Alice...">
