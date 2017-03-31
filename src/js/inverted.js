@@ -1,9 +1,16 @@
 class InvertedIndex {
   constructor() {
-    this.searchIndices = {};
     this.indexedFiles = {};
   }
 
+  /**
+   * 
+   * 
+   * @param {Object} eachFile - 
+   * @returns 
+   * 
+   * @memberOf InvertedIndex
+   */
   readFile(eachFile) {
     let fileContent;
     return new Promise((resolve, reject) => {
