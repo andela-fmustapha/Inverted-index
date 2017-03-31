@@ -7,6 +7,7 @@
     <title>BookSwitch</title>
 
     <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel= "stylesheet" type="text/css" />
 </head>
 
 <body ng-controller="index">
@@ -23,9 +24,9 @@
     <div id="content">
         <div id="user-input">
             <label for='fUpload'> select files: </label>
-            <input type="file" id="fUpload" onchange="angular.element(this).scope().readAllFiles()" accept=".json" multiple accept=".json"><br>
+            <input type="file" id="fUpload" onchange="angular.element(this).scope().validateFiles()" multiple accept=".json"><br>
             <!--<input ng-model="upload" type="button" id="upload" name="upload" value="Upload><br><br>-->
-            <button id="create-index" name="create-index" ng-click="readAllFiles()">Create Index</button><br>
+            <button id="create-index" name="create-index" ng-click="createBookIndex()">Create Index</button><br>
         </div>
         <div id='selectBooks'>
             <label>Select Book:</label>
@@ -70,7 +71,8 @@
     <script src="https://code.angularjs.org/1.3.0-rc.1/angular.min.js"></script>
     <script src="js/inverted.js"></script>
     <script src="js/indexController.js"></script>
-    <!--<script src="js/indexController.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
 </body>
 
 </html>

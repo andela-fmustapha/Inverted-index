@@ -33,6 +33,7 @@
     "gulp-util": "latest",
     "jasmine": "^2.5.3",
     "jasmine-core": "^2.5.2",
+    "jsdoc": "^3.4.3",
     "karma-jasmine": "^0.1.0"
   },
   "dependencies": {

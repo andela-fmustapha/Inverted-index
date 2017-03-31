@@ -4,45 +4,33 @@ class InvertedIndex {
     this.indexedFiles = {};
   }
 
-  readFile(aFiles) {
-    console.log(aFiles, 'aFiles');
-    aFiles.forEach((file) => {
-      const fileContent = [];
-      aFiles.forEach((eachFile) => { // read each file using FileReader
-        const reader = new FileReader();
-        reader.readAsText(eachFile);
-        reader.onload = ((event) => {
-          console.log(event, 'event');
-          try {
-            const result = JSON.parse(event.target.result);
-            console.log(eachFile, 'result');
-            console.log(invertedIndex.validateFile(result), 'ValidateFile');
-            if (this.validateFile(result)) {
-              fileContent.push(result);
-              console.log(fileContent, "fileContent");
-            } else {
-              console.log("The file is invalid");
-            }
-          } catch (err) {
-            console.log(err);
-          }
-        });
+  readFile(eachFile) {
+    let fileContent;
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsText(eachFile);
+      reader.onload = ((event) => {
+        try {
+          fileContent = JSON.parse(event.target.result);
+          resolve(fileContent);
+        } catch (err) {
+          reject(err);
+        }
       });
-      //console.log('this is the almighty filecontent', fileContent);
-      return fileContent;
     });
   }
 
   validateFile(jsonContent) {
-    let valid;
+    let isValid = false;
     jsonContent.forEach((doc) => {
       if (doc.title && doc.text) {
-        valid = true;
+        isValid = true;
       } else {
-        valid = false;
+        isValid = false;
       }
+      return isValid;
     });
-    return valid;
+    // return valid;
   }
 
   static unique(array) {
@@ -81,7 +69,7 @@ class InvertedIndex {
   createIndex(book, filename) {
     const indices = {};
     const splittedWords = {};
-    console.log(book,'book');
+    console.log(book, 'book');
     book.forEach((doc, key) => {
       const joinedkeys = InvertedIndex.concatenateText(doc);
       const tokenizedWords = InvertedIndex.tokenizeWords(joinedkeys);
@@ -99,25 +87,24 @@ class InvertedIndex {
     return this.indexedFiles;
   }
 
-  getIndex(searchWords) {
-    return this.indexedFiles[filename]; //Display a particular file
+  getIndex(filename) {
+    return this.indexedFiles[filename]; // Display a particular file
   }
 
   searchIndex(searchWords, fileName) {
     const searchResult = {};
-    // if(fileName==='All') return 
+    // if(fileName==='All') return
     if (typeof searchWords !== 'string') {
       return false;
     }
     searchWords = InvertedIndex.tokenizeWords(searchWords);
     const sortedWords = InvertedIndex.splitSort(searchWords);
-    //console.log(sortedWords)
+    // console.log(sortedWords)
     const index = this.indexedFiles[fileName];
     sortedWords.forEach((word) => {
       if (index[word]) {
         searchResult[word] = index[word];
-      }
-      else{
+      } else {
         searchResult[word] = [];
       }
     });
