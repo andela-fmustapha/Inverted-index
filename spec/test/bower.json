@@ -1,0 +1,23 @@
+{
+  "name": "inverted-index",
+  "description": "An application that builds an index from books in a file and allows you search through the file for words in the book.",
+  "main": "../src/ndex.html",
+  "authors": [
+    "Faith Mustapha"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "\"inverted-index\"",
+    "\"fast",
+    "search\""
+  ],
+  "homepage": "https://github.com/andela-fmustapha/Inverted-index",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
