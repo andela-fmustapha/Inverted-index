@@ -1,5 +1,8 @@
 const gulp = require('gulp');
 const browserSync = require('browser-sync').create();
+ const browserify = require('gulp-browserify');
+ const rename = require('gulp-rename');
+ const Server = require('karma').Server;
 
 const reload = browserSync.reload;
 
@@ -16,6 +19,19 @@ gulp.task('browser-sync', () => {
       baseDir: './src'
     },
     port: 3010,
+  });
+});
+
+gulp.task('browserify', () => {
+  gulp.src('./spec/invertedSpec.js')
+  .pipe(browserify())
+  .pipe(rename('bundle.js'))
+  .pipe(gulp.dest('./build'));
+});
+
+gulp.task('test', (completed) => {
+  new Server({
+    configFile: `${__dirname}`
   });
 });
 
