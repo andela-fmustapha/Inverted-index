@@ -4,7 +4,7 @@
   "description": "An application that builds an index from books in a file and allows you search through the file for words in the book.",
   "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "karma start --single-run"
   },
   "repository": {
     "type": "git",
@@ -34,9 +34,18 @@
     "jasmine": "^2.5.3",
     "jasmine-core": "^2.5.2",
     "jsdoc": "^3.4.3",
-    "karma-jasmine": "^0.1.0"
+    "karma": "^1.5.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-coverage": "^1.1.1",
+    "karma-coveralls": "^1.1.2",
+    "karma-jasmine": "^0.1.0",
+    "requirejs": "^2.3.3"
   },
   "dependencies": {
-    "gulp-util": "^3.0.8"
+    "gulp-browserify": "^0.5.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-util": "^3.0.8",
+    "jasmine-core": "^2.5.2",
+    "object.values": "^1.0.4"
   }
 }

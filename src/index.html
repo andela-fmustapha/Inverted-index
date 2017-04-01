@@ -40,32 +40,33 @@
         </div>
     </div>
     <div id='result'>
-        <div id="user-output">
-            <table>
+        <!--<div id="user-output">-->
+    <div id= "user-output" ng-repeat="(filename, filedata) in fileIndices">
+        <p>{{filename}}</p>
+        <table>
+            <thead>
                 <tr>
-                    <th>
-                        Words
-                    </th>
-                    <th>
-                        Sample
-                    </th>
-                    <th>
-                        sample2
-                    </th>
+                    <th>Words</th>
+                    <th ng-repeat='title in titles[filename]'>{{title}}</th>
                 </tr>
-                <tr>
-                    <td>
-                        Example 1
-                    </td>
-                    <td>
-                        Example 2
-                    </td>
-                    <td>
-                        Example 3
+            </thead>
+            <tbody>
+                <tr ng-repeat="(key, values) in filedata">
+                    <td> {{key}} </td>
+                    <td ng-repeat="number in docCount[filename]">
+                        <span ng-if="values.includes(number) == true">
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true">√</span>
+                            <!--<span aria-hidden="true"> YES </span>-->
+                        </span>
+                        <span ng-if="values.includes(number) === false">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"> X </span>
+                            <!--<span aria-hidden="true"> X </span>-->
+                        </span>
                     </td>
                 </tr>
-            </table>
-        </div>
+            </tbody>
+        </table>
+    </div>
     </div>
     <div id="footer">Copyright &copy; FAM.com</div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
