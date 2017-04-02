@@ -91,7 +91,7 @@ class InvertedIndex {
    * @memberOf InvertedIndex
    */
   static tokenizeWords(text) {
-    const invalid = /[.,\/#!$%\^&\*;:{}=\-_`~()]/g;
+    const invalid = /[.,/#!$%^&*;:{}=\-_`~()]/g;
     text = text.replace(invalid, '');
     return text;
   }
