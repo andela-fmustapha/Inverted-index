@@ -1,16 +1,13 @@
 const validBook = require('./test/testFiles/validBook.json');  //  book with valid contents
 const invalidBook = require('./test/testFiles/invalidBook.json'); //  book with invalid content
 const emptyBook = require('./test/testFiles/emptyBook.json');   //  empty book
-const malformedJSON = require('./test/testFiles/malformed.json');
-const smallBook = require('./test/testFiles/smallValidBook.json');
-const InvertedIndex = require('../src/js/inverted.js').InvertedIndex;
+const malformedJSON = require('./test/testFiles/malformed.json'); // empty book
+const smallBook = require('./test/testFiles/smallValidBook.json'); // book with few words
+const InvertedIndex = require('../src/js/inverted.js').InvertedIndex; // Inverted Index class file
 
 const invertedIndex = new InvertedIndex();
 
 describe('InvertedIndex class', () => {
-  // invertedIndex.createIndex('validBook.json', validBook);
- // invertedIndex.createIndex('secondBook.json', secondBook);
-
   describe('InvertedIndex class', () => {
     it('should check that the class has a createIndex method', () => {
       expect(typeof invertedIndex.createIndex).toBe('function');
@@ -45,7 +42,6 @@ describe('InvertedIndex class', () => {
     });
   });
 
-  // describe('validateFile', () => {
   it('should check that the contents of the uploaded file is valid',
     () => {
       expect(InvertedIndex.validateFile(validBook)).toBeTruthy();
@@ -74,15 +70,8 @@ describe('InvertedIndex class', () => {
        expect(InvertedIndex.validateFile(malformedJSON)).toBeFalsy();
      });
 
-//      it('should return false if file is a JSON file but not an array of an array',
-//      () => {
-//        expect(InvertedIndex.validateFile(notValid)).toBeFalsy();
-//      });
-  // });
-  // (limitations of the product)
-
   describe('Create Index', () => {
-    it('should return an mapped indices to words in a JSON file', () => {
+    it('should return mapped indices to words in a JSON file', () => {
       const expectedResult =
         { 'smallValidBook.json':
         { a: [0],
