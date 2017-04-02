@@ -1,9 +1,26 @@
+/**
+ *
+ * @class InvertedIndex
+ */
 class InvertedIndex {
+
+  /**
+   * Creates an instance of InvertedIndex.
+   * @memberOf InvertedIndex
+   */
   constructor() {
     this.searchIndices = {};
     this.indexedFiles = {};
   }
 
+  /**
+   *
+   *
+   * @param {Object} eachFile - Javascript object containing file properties
+   * @returns {Object} fileContent - content of the read file
+   *
+   * @memberOf InvertedIndex
+   */
   readFile(eachFile) {
     let fileContent;
     return new Promise((resolve, reject) => {
@@ -20,6 +37,14 @@ class InvertedIndex {
     });
   }
 
+  /**
+   *
+   *
+   * @param {Object} jsonContent
+   * @returns{Boolean} isValid - returns true if a json file is valid and false otherwise
+   *
+   * @memberOf InvertedIndex
+   */
   validateFile(jsonContent) {
     let isValid = true;
     jsonContent.forEach((doc) => {
@@ -30,10 +55,19 @@ class InvertedIndex {
     return isValid;
   }
 
-  static unique(array) {
-    if (Array.isArray(array)) {
+  /**
+   *
+   *
+   * @static
+   * @param {Array} words -takes in an array of words with possible duplicates.
+   * @returns{Array} item -returns an array of words without duplicates.
+   *
+   * @memberOf InvertedIndex
+   */
+  static unique(words) {
+    if (Array.isArray(words)) {
       const checked = {};
-      return array.filter((item) => {
+      return words.filter((item) => {
         if (!checked[item]) {
           checked[item] = true;
           return item;
@@ -44,18 +78,45 @@ class InvertedIndex {
     return ['invalid data type supplied'];
   }
 
+  /**
+   *
+   *
+   * @static
+   * @param {String} text - a string of spaced words with unwanted characters
+   * @returns{String} text - a string of spaced words with no unwanted characters
+   *
+   * @memberOf InvertedIndex
+   */
   static tokenizeWords(text) {
     const invalid = /[.,\/#!$%\^&\*;:{}=\-_`~()]/g;
     text = text.replace(invalid, '');
     return text;
   }
 
-  static splitSort(docObject) {
+  /**
+   *
+   *
+   * @static
+   * @param {Object} docObject - an object containing a string of characters.
+   * @returns{Object} docObject - an object containing an array of words.
+   *
+   * @memberOf InvertedIndex
+   */
+  static splitAndSort(docObject) {
     const words = docObject.toLowerCase().split(' ').sort();
     docObject = InvertedIndex.unique(words);
     return docObject;
   }
 
+  /**
+   *
+   *
+   * @static
+   * @param {Object} jContent - single object of a JSON formatted file
+   * @returns{Object} concatenatedText - returns the concatenated values of object keys
+   *
+   * @memberOf InvertedIndex
+   */
   static concatenateText(jContent) {
     // if a document exists? combine title and text to split at once
     let concatenatedText = {};
@@ -63,14 +124,22 @@ class InvertedIndex {
     return concatenatedText;
   }
 
+  /**
+   *
+   *
+   * @param {Array} book - contents of a JSON formatted file
+   * @param {String} filename - name of the file
+   * @returns{Object} this.indexedFiles - contains filenames and their corresponding contents.
+   *
+   * @memberOf InvertedIndex
+   */
   createIndex(book, filename) {
     const indices = {};
     const splittedWords = {};
-    console.log(book, 'book');
     book.forEach((doc, key) => {
       const joinedkeys = InvertedIndex.concatenateText(doc);
       const tokenizedWords = InvertedIndex.tokenizeWords(joinedkeys);
-      splittedWords[key] = InvertedIndex.splitSort(tokenizedWords);
+      splittedWords[key] = InvertedIndex.splitAndSort(tokenizedWords);
     });
     // index words
     Object.keys(splittedWords).forEach((keys) => {
@@ -84,83 +153,45 @@ class InvertedIndex {
     return this.indexedFiles;
   }
 
+  /**
+   *
+   *
+   * @param {String} filename - the name of the JSON file
+   * @returns{Object} this.indexedFiles - displays file title and indices of words in the file
+   *
+   * @memberOf InvertedIndex
+   */
   getIndex(filename) {
     return this.indexedFiles[filename]; // Display a particular file
   }
 
+  /**
+   *
+   *
+   * @param {String} searchWords - the words you require indices for
+   * @param {String} fileName - the name of the file
+   * @returns{Object} searchOutput - the words and corresponding indices
+   *
+   * @memberOf InvertedIndex
+   */
   searchIndex(searchWords, fileName) {
-    const searchResult = {};
+    const searchOutput = {};
     // if(fileName==='All') return
     if (typeof searchWords !== 'string') {
       return false;
     }
     searchWords = InvertedIndex.tokenizeWords(searchWords);
-    const sortedWords = InvertedIndex.splitSort(searchWords);
+    const sortedWords = InvertedIndex.splitAndSort(searchWords);
     // console.log(sortedWords)
     const index = this.indexedFiles[fileName];
     sortedWords.forEach((word) => {
       if (index[word]) {
-        searchResult[word] = index[word];
+        searchOutput[word] = index[word];
       } else {
-        searchResult[word] = [];
+        searchOutput[word] = [];
       }
     });
-    return searchResult;
+    this.searchIndices[fileName] = searchOutput;
+    return searchOutput;
   }
-
-
 }
-
-
-// let allFiles = [];
-// const invertedIndex = new InvertedIndex();
-// const fileInput = document.getElementById('fUpload');
-// fileInput.addEventListener('change', () => {
-//     //get files and validate extension
-//     allFiles = [];
-//     console.log(fileInput.files);
-//     Object.keys(fileInput.files).forEach((file) => {
-//         const eachFile = fileInput.files[file];
-//         if (validateExt(eachFile.name)) {  //validate eachfile extention and push good files into allFiles
-//             allFiles.push(eachFile);
-//         } else {
-//             console.log(eachFile.name+' is not valid');
-//         }
-//     });
-
-// });
-
-
-//     const readEachfile = (file) => {
-//     const reader = new FileReader();
-//     reader.onload = (event) => {
-//         try {
-//            let result =event.target.result;
-//             console.log(invertedIndex.tokenizeWords(result));
-//             console.log(invertedIndex.createIndex(result));
-//         } catch (err) {
-//             console.log(err);
-//         }
-//     };
-//     reader.readAsText(file);
-// }
-
-// const readFile = () => {
-//     invertedIndex.readFile(allFiles);
-// }
-
-
-// let badExt = [];
-// let goodExt = [];
-
-// const validateExt = (name) => {
-//     if (!name.toLowerCase().match(/\.json$/)){
-//         badExt.push(name);
-//         console.log(badExt);
-//         return false;
-//     } else {
-//         goodExt.push(name);
-//         console.log(goodExt);
-//         return true;
-//     };
-// }

@@ -10,18 +10,14 @@ app.controller('index', ['$scope', 'alertFactory', ($scope, alertFactory) => {
   $scope.result = 'not done yet';
   $scope.content = {};
   $scope.filename = [];
-    // $scope.allFiles;
-    // let allFiles = [];
 
   const invertedIndex = new InvertedIndex();
 
   // function to read content from each file and validate JSON content structur
   $scope.validateFiles = () => {
-    // let allFiles = [];
     const badExt = [];
     const goodExt = [];
     const fileInput = document.getElementById('fUpload');
-    // console.log(fileInput.files);
     Object.keys(fileInput.files).forEach((file, index) => {
       const eachFile = fileInput.files[file];
       if (!eachFile.name.toLowerCase().match(/\.json$/)) {
@@ -29,16 +25,13 @@ app.controller('index', ['$scope', 'alertFactory', ($scope, alertFactory) => {
       } else {
         goodExt.push(eachFile.name);
         invertedIndex.readFile(eachFile).then((response) => {
-          console.log(response,'response');
-          if (invertedIndex.validateFile(response)){
-          $scope.content[eachFile.name] = response;
-        }
-        else{
-          console.log('bad file');
-        }
-          // $scope.filename.push(eachFile.name);
+          if (invertedIndex.validateFile(response)) {
+            $scope.content[eachFile.name] = response;
+          } else {
+            return 'bad file';
+          }
         }).catch((error) => {
-          console.log(error);
+          return error;
         });
       }
     });
@@ -52,13 +45,9 @@ app.controller('index', ['$scope', 'alertFactory', ($scope, alertFactory) => {
   };
 
   $scope.createBookIndex = () => {
-    // console.log($scope.content);
-    // return;
-    //const filenames = Object.keys($scope.content);
     Object.keys($scope.content).forEach((file) => {
       if (invertedIndex.validateFile($scope.content[file].index)) {
         try {
-          console.log($scope.filename, 'scope.filename');
           $scope.fileIndices = invertedIndex.createIndex(file, $scope.filename);
         } catch (err) {
           console.log(err);
