@@ -121,4 +121,30 @@ describe('InvertedIndex class', () => {
         .toBeGreaterThan(0);
     });
   });
+
+  describe('Search index', () => {
+    it('should return true if search term is a string', () => {
+      const term = 'Wonderland of rings';
+      expect(Object.keys(invertedIndex.searchIndex(term, 'smallValidBook.json')))
+      .toBeTruthy();
+    });
+  });
+
+  it('should search through single files that are indexed', () => {
+    const requiredOutput = {
+      'smallValidBook.json':
+      {
+        alice: [0],
+        and: [],
+        her: [],
+        imagination: [],
+        unusual: [1, 2]
+      }
+    };
+    let searchTerm = {};
+    searchTerm = invertedIndex.searchIndex('Alice, and her unusual imagination',
+      'smallValidBook.json');
+    expect(Object.keys(searchTerm)).toEqual(Object.keys(requiredOutput['smallValidBook.json']));
+    expect(searchTerm).toEqual(requiredOutput['smallValidBook.json']);
+  });
 });
