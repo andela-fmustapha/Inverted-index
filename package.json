@@ -4,7 +4,8 @@
   "description": "An application that builds an index from books in a file and allows you search through the file for words in the book.",
   "main": "index.html",
   "scripts": {
-    "test": "karma start --single-run"
+    "test": "karma start --single-run",
+    "start": "gulp"
   },
   "repository": {
     "type": "git",

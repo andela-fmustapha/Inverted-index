@@ -19,7 +19,7 @@ The project implements Inverted Index which is known to achieve fast search resp
     * Clone the repo `git clone https://github.com/andela-fmustapha/inverted-index.git`
     * Change directory into `inverted-index` folder
     * Run `npm install` to install all dependencies
-    * Run `npm start` to run the application
+    * Run `gulp` to run the application
   - How to run tests
     * Run `npm test` 
 
@@ -44,7 +44,7 @@ The application can only upload JSON files in this [format](https://gist.github.
 
 ### Contributing to the project
 * Fork this repositry to your account
-* Clone your repositry -  `git clone https://github.com/andela-moseni/inverted-index.git`
+* Clone your repositry -  `git clone https://github.com/andela-fmustapha/inverted-index.git`
 * Create your feature branch - `git checkout -b new-feature`
 * Commit your changes - `git commit -m "did something"`
 * Push to the remote branch - `git push origin new-feature`
