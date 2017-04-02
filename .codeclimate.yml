@@ -11,4 +11,17 @@ engines:
     enabled: true
 ratings:
   paths:
-    src/js/inverted.js
+    - "src/js/indexController.js.js"
+    - "src/js/inverted.js"
+    - "spec/invertedSpec.js"
+languages:
+  JavaScript: true
+exclude_paths:
+- "src/css"
+- "src/images"
+- .gitignore
+- .eslintignore
+- .travis.yml
+- .eslintrc.json
+- "spec/"
+- "server.js"

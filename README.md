@@ -4,63 +4,60 @@
 # BookSwitch
 An application that builds an index from a JSON array of one or more text objects and allows you search for words in the created Index.
 
-#### Features
-- Accepts Upload of JSON file in below format.
-```
-[
-  {
-    "title": "Baron in Freeland",
-    "text": "Baron falls into a mighty hole and enters a world full of freedom."
-  },
+## Features
+- Upload file(s)
+- Create an index for uploaded file(s)
+- Search through indexed files 
 
-  {
-    "title": "The Lord of the Mind: The Fellowship of the Soul.",
-    "text": "An unusual alliance of man, elf, dwarf, wizard and hobbit seek to destroy a powerful ring."
-  },
-  {
-    "title": "The Criminal Mind: The beginning of destruction.",
-    "text": "The mind which chooses to be criminal will always end up bringing destruction."
-  }
-]
-```
-- Creates Index of all objects with 'title' and 'text' keys in uploaded file.
-- Allows Searching through the created index.
+### Why the project is useful
+The project implements Inverted Index which is known to achieve fast search responses because instead of searching the text directly, it searches an index instead.
 
-#### How to use
-The Application is available:
-- On the internet via [https://inverted-index-andela-fmustapha.herokuapp.com](https://inverted-index-andela-fmustapha.herokuapp.com/)
-- And on any local machine after the following steps:
-    ```
-    git clone https://github.com/andela-fmustapha/inverted-index.git
-    ```
+### How users can get started with the project
+  - Requirements
+    * To run the app locally, you need to have `node.js` installed
+  - How to setup the project/Installation/Configuration
+    * Clone the repo `git clone https://github.com/andela-fmustapha/inverted-index.git`
+    * Change directory into `inverted-index` folder
+    * Run `npm install` to install all dependencies
+    * Run `npm start` to run the application
+  - How to run tests
+    * Run `npm test` 
 
-    * Navigate to the 'inverted-index' directory via your terminal
-
-    * Install all the dependencies (you must have installed [Nodejs](nodejs.org)):
-
-    ```
-    npm install
-    ```
-
-    - Run Tests for the application with:
-
-    ```
-    npm test
-    ```
-
-  - Start the Application with:
-  ```
-    gulp
-    ```
-
-  - Access the application via http://localhost:3015/
+### How to use the app
+When the app has started: 
+* Click on `Upload File` to upload valid JSON file(s)
+* Upon successful upload, click on the `Create Index` button 
+* Scroll down the page to see the created Index displayed in a tabular format
+* Choose a file to search through a file or `All files` to search through all files, input search words and view results below on the table.
 
 
-#### The application was built using the following Technologies and Services:
-- Gulp
-- Karma
-- Jasmine
-- Travis CI
-- Coveralls
-- Hound CI
-- AngularJS
+### Technology stack
+* Node JS
+* ES6
+* AngularJS
+* Gulp
+* Karma 
+* Jasmine
+
+### Limitations of the project
+The application can only upload JSON files in this [format](https://gist.github.com/q-ode/72019451b98f079a8d737eb7a412bf14)
+
+### Contributing to the project
+* Fork this repositry to your account
+* Clone your repositry -  `git clone https://github.com/andela-moseni/inverted-index.git`
+* Create your feature branch - `git checkout -b new-feature`
+* Commit your changes - `git commit -m "did something"`
+* Push to the remote branch - `git push origin new-feature`
+* Open a pull request
+
+### Troubleshooting & FAQ
+- [inverted-index issues page](https://github.com/andela-fmustapha/inverted-index/issues)
+
+### Resources
+- For further research on **Inverted index**, click [here](https://www.elastic.co/guide/en/elasticsearch/guide/current/inverted-index.html)
+
+### License
+  *  **MIT**
+
+## Author
+* **Faith Mustapha**

@@ -32,11 +32,18 @@
 }
 
 #user-input,
-#user-output,
 #selectBooks {
     float: left;
     width: 10em;
     margin: 10px;
+}
+
+#user-output
+{
+    float: left;
+    /*width: 100%;*/
+    /*margin: 10px;*/
+    padding: 50px;
 }
 
 #result {
@@ -82,7 +89,6 @@ th {
     background-color: SteelBlue;
     color: white;
 }
-
 
 /*Style buttons */
 
