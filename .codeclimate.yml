@@ -13,7 +13,7 @@ ratings:
   paths:
     - "src/js/indexController.js.js"
     - "src/js/inverted.js"
-    - "jasmine/specs/*"
+    - "spec/invertedSpec.js"
 languages:
   JavaScript: true
 exclude_paths:
@@ -23,6 +23,5 @@ exclude_paths:
 - .eslintignore
 - .travis.yml
 - .eslintrc.json
-- "spec/"
 - "spec/"
 - "server.js"
