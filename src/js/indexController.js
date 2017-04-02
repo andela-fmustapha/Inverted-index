@@ -1,11 +1,13 @@
 const app = angular.module('angular', []);
 app.controller('index', ['$scope', 'alertFactory', ($scope, alertFactory) => {
-  $scope.message = "About this application!/n Users should be able to click an 'Upload File' to upload book files" +
-      'Allow multiple uploads' +
-      "Users should be able to click a 'Create Index' button to create an Inverted for uploaded files" +
-      'Users should be able to search through files that have been indexed' +
-      'Allow Users search through selected files' +
-      'Allow Users search through all indexed files';
+  $scope.message = "About this application!\n Click on 'Upload File'" +
+   'to upload book files \n(make sure there are no spaces in your filename e.g Book one.json)\n' +
+   'you should use BookOne.json instead\n' +
+      'You can select multiple files at once' +
+      "Then click on the 'Create Index' button to create an Inverted index for uploaded files\n" +
+      "To search through files that have been indexed, select the filename under 'Select Files'\n" +
+      "Then click the 'Go' button to search through selected files\n" +
+      'You can select all to search through all indexed files\n';
 
   $scope.result = 'not done yet';
   $scope.content = {};
