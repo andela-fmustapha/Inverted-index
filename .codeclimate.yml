@@ -9,7 +9,9 @@ engines:
     channel: "eslint-3"
   checks:
     no-undef:
-    enabled: false
+      enabled: false
+    Identical code:
+      enabled: false
   fixme:
     enabled: true
 ratings:
