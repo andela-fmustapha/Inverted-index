@@ -9,15 +9,20 @@ app.controller('index', ['$scope', 'alertFactory', ($scope, alertFactory) => {
 
   $scope.result = 'not done yet';
   $scope.content = {};
-  $scope.filename = [];
+  $scope.docCount = {};
+  $scope.titles = {};
+    // $scope.allFiles;
+    // let allFiles = [];
 
   const invertedIndex = new InvertedIndex();
 
   // function to read content from each file and validate JSON content structur
   $scope.validateFiles = () => {
+    // let allFiles = [];
     const badExt = [];
     const goodExt = [];
     const fileInput = document.getElementById('fUpload');
+    // console.log(fileInput.files);
     Object.keys(fileInput.files).forEach((file, index) => {
       const eachFile = fileInput.files[file];
       if (!eachFile.name.toLowerCase().match(/\.json$/)) {
@@ -25,13 +30,22 @@ app.controller('index', ['$scope', 'alertFactory', ($scope, alertFactory) => {
       } else {
         goodExt.push(eachFile.name);
         invertedIndex.readFile(eachFile).then((response) => {
-          if (invertedIndex.validateFile(response)) {
-            $scope.content[eachFile.name] = response;
-          } else {
-            return 'bad file';
-          }
+          // console.log(response, 'response');
+          $scope.content[eachFile.name] = response;
+          // console.log(response);
+          const docTitles = [];
+          const count = [];
+          let index = 0;
+          response.forEach((doc) => {
+            docTitles.push(doc.title);
+            count.push(index);
+            index += 1;
+          });
+          $scope.titles[eachFile.name] = docTitles;
+          $scope.docCount[eachFile.name] = count;
+          console.log($scope.docCount);
         }).catch((error) => {
-          return error;
+          console.log(error);
         });
       }
     });
@@ -45,16 +59,15 @@ app.controller('index', ['$scope', 'alertFactory', ($scope, alertFactory) => {
   };
 
   $scope.createBookIndex = () => {
-    Object.keys($scope.content).forEach((file) => {
-      if (invertedIndex.validateFile($scope.content[file].index)) {
-        try {
-          $scope.fileIndices = invertedIndex.createIndex(file, $scope.filename);
-        } catch (err) {
-          console.log(err);
-        }
-        return $scope.fileIndices;
+    Object.keys($scope.content).forEach((filename) => {
+      try {
+        // console.log($scope.filename, 'scope.filename');
+        $scope.fileIndices = invertedIndex.createIndex($scope.content[filename], filename);
+        // $scope.docTitle = invertedIndex.allTitles[filename];
+      } catch (err) {
+        console.log(err);
       }
-      return 'Your file is not in the right structure';
+      console.log($scope.fileIndices);
     });
   };
 

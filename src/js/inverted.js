@@ -11,6 +11,7 @@ class InvertedIndex {
   constructor() {
     this.searchIndices = {};
     this.indexedFiles = {};
+    this.allTitles = {};
   }
 
   /**
@@ -38,15 +39,17 @@ class InvertedIndex {
   }
 
   /**
-   *
+  *
    *
    * @param {Object} jsonContent
    * @returns{Boolean} isValid - returns true if a json file is valid and false otherwise
    *
    * @memberOf InvertedIndex
    */
-  validateFile(jsonContent) {
-    let isValid = true;
+  static validateFile(jsonContent) {
+    if (Object.keys(jsonContent).length === 0 && typeof jsonContent === 'object') {
+      return false;
+    } let isValid = true;
     jsonContent.forEach((doc) => {
       if (!doc.title || !doc.text) {
         isValid = false;
@@ -64,7 +67,7 @@ class InvertedIndex {
    *
    * @memberOf InvertedIndex
    */
-  static unique(words) {
+  static uniqueWords(words) {
     if (Array.isArray(words)) {
       const checked = {};
       return words.filter((item) => {
@@ -92,7 +95,6 @@ class InvertedIndex {
     text = text.replace(invalid, '');
     return text;
   }
-
   /**
    *
    *
@@ -104,7 +106,7 @@ class InvertedIndex {
    */
   static splitAndSort(docObject) {
     const words = docObject.toLowerCase().split(' ').sort();
-    docObject = InvertedIndex.unique(words);
+    docObject = InvertedIndex.uniqueWords(words);
     return docObject;
   }
 
@@ -145,8 +147,8 @@ class InvertedIndex {
     Object.keys(splittedWords).forEach((keys) => {
       splittedWords[keys].forEach((words) => {
         if (!indices.hasOwnProperty(words)) {
-          indices[words] = [keys];
-        } else { indices[words].push(keys); }
+          indices[words] = [Number(keys)];
+        } else { indices[words].push(Number(keys)); }
       });
     });
     this.indexedFiles[filename] = indices;
@@ -195,3 +197,5 @@ class InvertedIndex {
     return searchOutput;
   }
 }
+
+module.exports.InvertedIndex = InvertedIndex;
