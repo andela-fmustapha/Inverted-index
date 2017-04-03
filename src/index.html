@@ -30,19 +30,45 @@
         </div>
         <div id='selectBooks'>
             <label>Select Book:</label>
-            <select id="bookList" ng-model="selectedFile">
-             <option ng-repeat="(filename, filecontent) in content"> {{ filename }}</option>
+            <select ng-model ="bookList">
+             <option ng-repeat="(filename, filecontent) in content">{{filename}}</option>
              </select>
             <span>
-            Search words:<input type="search" id="search" name="search" file-model = "myFile" value="e.g. Alice...">
-            <input id="button" type="button" name="create-index" value="Go">
+            Search words:<input type="search" id="search" name="search">
+            <button id="button" name="create-index" ng-click= "searchBookIndex()">Go </button>
           </span>
         </div>
     </div>
     <div id='result'>
         <!--<div id="user-output">-->
-    <div id= "user-output" ng-repeat="(filename, filedata) in fileIndices">
-        <p><b>{{filename}}</b></p>
+    <div id= "user-output" ng-show='showIndex' ng-repeat="(filename, filedata) in fileIndices">
+        <p id='paragraph'><b>{{filename}}</b></p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Words</th>
+                    <th ng-repeat='title in titles[filename]'>{{title}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="(key, values) in filedata">
+                    <td> {{key}} </td>
+                    <td ng-repeat="number in docCount[filename]">
+                        <span ng-if="values.includes(number) == true">
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true">√</span>
+                            <!--<span aria-hidden="true"> YES </span>-->
+                        </span>
+                        <span ng-if="values.includes(number) === false">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"> X </span>
+                            <!--<span aria-hidden="true"> X </span>-->
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id= "user-output" ng-show='showSearch' ng-repeat="(filename, filedata) in searchFeedback">
+        <p id='paragraph'><b>{{filename}}</b></p>
         <table>
             <thead>
                 <tr>

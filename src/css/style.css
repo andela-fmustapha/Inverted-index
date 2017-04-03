@@ -18,6 +18,10 @@
     font-family: "HelveticaNeue-Light";
 }
 
+#paragraph{
+    border-bottom: 3px solid SteelBlue;
+    border-top: 3px solid SteelBlue;
+}
 
 /*style div tags*/
 
@@ -34,7 +38,7 @@
 #user-input,
 #selectBooks {
     float: left;
-    width: 10em;
+    width: 15em;
     margin: 10px;
 }
 
