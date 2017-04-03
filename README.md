@@ -1,4 +1,4 @@
-[![Code Climate](https://codeclimate.com/github/andela-fmustapha/inverted-index/badges/gpa.svg)](https://codeclimate.com/github/andela-fmustapha/inverted-index) [![Coverage Status](https://coveralls.io/repos/github/andela-fmustapha/inverted-index/badge.svg)](https://coveralls.io/github/andela-fmustapha/inverted-index) [![Build Status](https://travis-ci.org/andela-fmustapha/inverted-index.svg?branch=master)](https://travis-ci.org/andela-fmustapha/inverted-index)
+[![Code Climate](https://codeclimate.com/github/andela-fmustapha/inverted-index/badges/gpa.svg)](https://codeclimate.com/github/andela-fmustapha/inverted-index) [![Coverage Status](https://coveralls.io/repos/github/andela-fmustapha/inverted-index/badge.svg?branch=master)](https://coveralls.io/github/andela-fmustapha/inverted-index) [![Build Status](https://travis-ci.org/andela-fmustapha/inverted-index.svg?branch=master)](https://travis-ci.org/andela-fmustapha/inverted-index)
 
 
 # BookSwitch
@@ -28,7 +28,7 @@ When the app has started:
 * Click on `Upload File` to upload valid JSON file(s)
 * Upon successful upload, click on the `Create Index` button 
 * Scroll down the page to see the created Index displayed in a tabular format
-* Choose a file to search through a file or `All files` to search through all files, input search words and view results below on the table.
+* Choose a file to search through a file, input search words and view results below on the table.
 
 
 ### Technology stack
@@ -44,7 +44,7 @@ The application can only upload JSON files in this [format](https://gist.github.
 
 ### Contributing to the project
 * Fork this repositry to your account
-* Clone your repositry -  `git clone https://github.com/andela-moseni/inverted-index.git`
+* Clone your repositry -  `git clone https://github.com/andela-fmustapha/inverted-index.git`
 * Create your feature branch - `git checkout -b new-feature`
 * Commit your changes - `git commit -m "did something"`
 * Push to the remote branch - `git push origin new-feature`
