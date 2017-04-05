@@ -1,8 +1,8 @@
 const gulp = require('gulp');
 const browserSync = require('browser-sync').create();
- const browserify = require('gulp-browserify');
- const rename = require('gulp-rename');
- const Server = require('karma').Server;
+const browserify = require('gulp-browserify');
+const rename = require('gulp-rename');
+
 
 const reload = browserSync.reload;
 
@@ -29,10 +29,10 @@ gulp.task('browserify', () => {
   .pipe(gulp.dest('./build'));
 });
 
-gulp.task('test', (completed) => {
-  new Server({
-    configFile: `${__dirname}`
-  });
-});
+// gulp.task('test', (completed) => {
+//   new Server({
+//     configFile: `${__dirname}`
+//   });
+// });
 
 gulp.task('default', ['watch', 'browser-sync']);

@@ -2,16 +2,13 @@
 const validBook = require('./test/testFiles/validBook.json');  //  book with valid contents
 const invalidBook = require('./test/testFiles/invalidBook.json'); //  book with invalid content
 const emptyBook = require('./test/testFiles/emptyBook.json');   //  empty book
-const malformedJSON = require('./test/testFiles/malformed.json');
-const smallBook = require('./test/testFiles/smallValidBook.json');
-const InvertedIndex = require('../src/js/inverted.js').InvertedIndex;
+const malformedJSON = require('./test/testFiles/malformed.json'); // empty book
+const smallBook = require('./test/testFiles/smallValidBook.json'); // book with few words
+const InvertedIndex = require('../src/js/inverted.js').InvertedIndex; // Inverted Index class file
 
 const invertedIndex = new InvertedIndex();
 
 describe('InvertedIndex class', () => {
-  // invertedIndex.createIndex('validBook.json', validBook);
- // invertedIndex.createIndex('secondBook.json', secondBook);
-
   describe('InvertedIndex class', () => {
     it('should check that the class has a createIndex method', () => {
       expect(typeof invertedIndex.createIndex).toBe('function');
@@ -46,23 +43,34 @@ describe('InvertedIndex class', () => {
     });
   });
 
-  // describe('validateFile', () => {
   it('should check that the contents of the uploaded file is valid',
     () => {
       expect(InvertedIndex.validateFile(validBook)).toBeTruthy();
     });
 
   it('should return false for empty json files', () => {
-    expect(InvertedIndex.validateFile(emptyBook)).toBeFalsy();
+    const successMsg = { status: false };
+
+    expect(InvertedIndex.validateFile(emptyBook)).toEqual(successMsg);
   });
 
   it('should return true for uploaded files with property "title" and "text" ', () => {
-    expect(InvertedIndex.validateFile(validBook)).toBeTruthy();
+    const successMsg = { status: true,
+      jsonContent:
+      [Object({ title: 'Alice in Wonderland',
+        text: 'Alice falls into a rabbit hole.' }),
+        Object({ title: 'The Lord of the Rings',
+          text: 'An unusual alliance of man.' }),
+        Object({ title: 'The Lord of the Rings:',
+          text: 'An unusual alliance of man.' })
+      ] };
+    expect(InvertedIndex.validateFile(smallBook)).toEqual(successMsg);
   });
 
   it('should return false for files without "title" and "text" properties',
      () => {
-       expect(InvertedIndex.validateFile(invalidBook)).toBeFalsy();
+       const msg = false;
+       expect(InvertedIndex.validateFile(invalidBook)).toEqual(msg);
      });
 
   it('should return false if file is not an array of JSON object',
@@ -72,18 +80,12 @@ describe('InvertedIndex class', () => {
 
   it('should return false if file contains an empty array',
      () => {
-       expect(InvertedIndex.validateFile(malformedJSON)).toBeFalsy();
+       const msg = { status: false };
+       expect(InvertedIndex.validateFile(malformedJSON)).toEqual(msg);
      });
 
-//      it('should return false if file is a JSON file but not an array of an array',
-//      () => {
-//        expect(InvertedIndex.validateFile(notValid)).toBeFalsy();
-//      });
-  // });
-  // (limitations of the product)
-
   describe('Create Index', () => {
-    it('should return an mapped indices to words in a JSON file', () => {
+    it('should return mapped indices to words in a JSON file', () => {
       const expectedResult =
         { 'smallValidBook.json':
         { a: [0],
@@ -145,8 +147,8 @@ describe('InvertedIndex class', () => {
     let searchTerm = {};
     searchTerm = invertedIndex.searchIndex('Alice, and her unusual imagination',
       'smallValidBook.json');
-    expect(Object.keys(searchTerm)).toEqual(Object.keys(requiredOutput['smallValidBook.json']));
-    expect(searchTerm).toEqual(requiredOutput['smallValidBook.json']);
+    expect(Object.keys(searchTerm)).toEqual(Object.keys(requiredOutput));
+    expect(searchTerm).toEqual(requiredOutput);
   });
 });
 
@@ -218,7 +220,6 @@ class InvertedIndex {
   constructor() {
     this.searchIndices = {};
     this.indexedFiles = {};
-    this.allTitles = {};
   }
 
   /**
@@ -232,16 +233,17 @@ class InvertedIndex {
   readFile(eachFile) {
     let fileContent;
     return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsText(eachFile);
-      reader.onload = ((event) => {
-        try {
+      try {
+        const reader = new FileReader();
+        reader.onload = (event) => {
           fileContent = JSON.parse(event.target.result);
-          resolve(fileContent);
-        } catch (err) {
-          reject(err);
-        }
-      });
+          const response = InvertedIndex.validateFile(fileContent);
+          resolve(response);
+        };
+        reader.readAsText(eachFile);
+      } catch (err) {
+        reject(err);
+      }
     });
   }
 
@@ -249,22 +251,40 @@ class InvertedIndex {
   *
    *
    * @param {Object} jsonContent
-   * @returns{Boolean} isValid - returns true if a json file is valid and false otherwise
-   *
+   * @returns{Object} isValid - returns true and JSON content file is valid and false otherwise
+   * @returns{Object} formatError - returns a name and message if json file has an invalid format
    * @memberOf InvertedIndex
    */
   static validateFile(jsonContent) {
+    let isValid = {};
+    const formatError = {
+      name: 'validate file structure',
+      message: 'File structure is invalid'
+    };
     if (Object.keys(jsonContent).length === 0 && typeof jsonContent === 'object') {
-      return false;
-    } let isValid = true;
-    jsonContent.forEach((doc) => {
-      if (!doc.title || !doc.text) {
-        isValid = false;
-      }
-    });
+      isValid = {
+        status: false
+      };
+      return isValid;
+    }
+    try {
+      jsonContent.forEach((doc) => {
+        if (!doc.title || !doc.text) {
+          throw formatError;
+        } else {
+          isValid = {
+            status: true,
+            jsonContent
+          };
+          return isValid;
+        }
+      });
+    } catch (error) {
+      if (error.name === 'validate file structure') return false;
+      throw error;
+    }
     return isValid;
   }
-
   /**
    *
    *
@@ -350,7 +370,6 @@ class InvertedIndex {
       const tokenizedWords = InvertedIndex.tokenizeWords(joinedkeys);
       splittedWords[key] = InvertedIndex.splitAndSort(tokenizedWords);
     });
-    // index words
     Object.keys(splittedWords).forEach((keys) => {
       splittedWords[keys].forEach((words) => {
         if (!indices.hasOwnProperty(words)) {
@@ -378,30 +397,43 @@ class InvertedIndex {
    *
    *
    * @param {String} searchWords - the words you require indices for
-   * @param {String} fileName - the name of the file
+   * @param {String} searchBook - the name of the file
    * @returns{Object} searchOutput - the words and corresponding indices
    *
    * @memberOf InvertedIndex
    */
-  searchIndex(searchWords, fileName) {
+  searchIndex(searchWords, searchBook) {
     const searchOutput = {};
-    // if(fileName==='All') return
     if (typeof searchWords !== 'string') {
       return false;
     }
     searchWords = InvertedIndex.tokenizeWords(searchWords);
     const sortedWords = InvertedIndex.splitAndSort(searchWords);
-    // console.log(sortedWords)
-    const index = this.indexedFiles[fileName];
-    sortedWords.forEach((word) => {
-      if (index[word]) {
-        searchOutput[word] = index[word];
-      } else {
-        searchOutput[word] = [];
-      }
-    });
-    this.searchIndices[fileName] = searchOutput;
-    return searchOutput;
+    if (searchBook !== 'All') {
+      const index = this.indexedFiles[searchBook];
+      sortedWords.forEach((word) => {
+        if (index[word]) {
+          searchOutput[word] = index[word];
+        } else {
+          searchOutput[word] = [];
+        }
+      });
+      this.searchIndices[searchBook] = searchOutput;
+    } else {
+      const index = this.indexedFiles;
+      Object.keys(index).forEach((filename) => {
+        const indexedFile = this.indexedFiles[filename];
+        sortedWords.forEach((word) => {
+          if (indexedFile[word]) {
+            searchOutput[word] = indexedFile[word];
+          } else {
+            searchOutput[word] = [];
+          }
+        });
+        this.searchIndices[filename] = searchOutput;
+      });
+    }
+    return this.searchIndices;
   }
 }
 
