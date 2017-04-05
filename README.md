@@ -29,6 +29,7 @@ When the app has started:
 * Upon successful upload, click on the `Create Index` button 
 * Scroll down the page to see the created Index displayed in a tabular format
 * Choose a file to search through a file, input search words and view results below on the table.
+* Choose 'All' under 'Select File' to search through all indexed files, input search words and view results.
 
 
 ### Technology stack
