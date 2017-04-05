@@ -125,28 +125,55 @@ describe('InvertedIndex class', () => {
   });
 
   describe('Search index', () => {
-    it('should return true if search term is a string', () => {
-      const term = 'Wonderland of rings';
-      expect(Object.keys(invertedIndex.searchIndex(term, 'smallValidBook.json')))
-      .toBeTruthy();
-    });
-  });
+    describe('Search index of words', () => {
+      it('should return true if search term is a string', () => {
+        const term = 'Wonderland of rings';
+        expect(Object.keys(invertedIndex.searchIndex(term, 'smallValidBook.json')))
+        .toBeTruthy();
+      });
 
-  it('should search through single files that are indexed', () => {
-    const requiredOutput = {
-      'smallValidBook.json':
-      {
-        alice: [0],
-        and: [],
-        her: [],
-        imagination: [],
-        unusual: [1, 2]
-      }
-    };
-    let searchTerm = {};
-    searchTerm = invertedIndex.searchIndex('Alice, and her unusual imagination',
-      'smallValidBook.json');
-    expect(Object.keys(searchTerm)).toEqual(Object.keys(requiredOutput));
-    expect(searchTerm).toEqual(requiredOutput);
+      it('should return false if search term is not a string', () => {
+        const term = [];
+        expect(invertedIndex.searchIndex(term, 'smallValidBook.json'))
+        .toBeFalsy();
+      });
+
+      it('should search through single files that are indexed', () => {
+        const requiredOutput = {
+          'smallValidBook.json':
+          {
+            alice: [0],
+            and: [],
+            her: [],
+            imagination: [],
+            unusual: [1, 2]
+          }
+        };
+        let searchTerm = {};
+        searchTerm = invertedIndex.searchIndex('Alice, and her unusual imagination',
+        'smallValidBook.json');
+        expect(Object.keys(searchTerm)).toEqual(Object.keys(requiredOutput));
+        expect(searchTerm).toEqual(requiredOutput);
+      });
+
+      it('should search through all files that are indexed', () => {
+        const output = {
+          'smallValidBook.json':
+          {
+            alice: [0],
+            and: [],
+            her: [],
+            imagination: [],
+            unusual: [1, 2]
+          }
+
+        };
+        let term = {};
+        term = invertedIndex.searchIndex('Alice, and her unusual imagination',
+        'All');
+        expect(Object.keys(term)).toEqual(Object.keys(output));
+        expect(term).toEqual(output);
+      });
+    });
   });
 });
