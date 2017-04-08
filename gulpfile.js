@@ -23,7 +23,7 @@ gulp.task('browser-sync', () => {
 });
 
 gulp.task('browserify', () => {
-  gulp.src('./spec/invertedSpec.js')
+  gulp.src('./spec/InvertedIndex.spec.js')
   .pipe(browserify())
   .pipe(rename('bundle.js'))
   .pipe(gulp.dest('./build'));
