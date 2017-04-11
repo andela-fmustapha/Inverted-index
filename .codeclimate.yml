@@ -1,0 +1,33 @@
+engines:
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - javascript
+  eslint:
+    enabled: true
+    channel: "eslint-3"
+  checks:
+    no-undef:
+      enabled: false
+    Identical code:
+      enabled: false
+  fixme:
+    enabled: true
+ratings:
+  paths:
+    - "src/js/indexController.js.js"
+    - "src/js/inverted.js"
+    - "spec/invertedSpec.js"
+languages:
+  JavaScript: true
+exclude_paths:
+- "src/css"
+- "src/images"
+- .gitignore
+- .eslintignore
+- .travis.yml
+- .eslintrc.json
+- "spec/"
+- "build/bundle.js"
+- "server.js"

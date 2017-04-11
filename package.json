@@ -4,7 +4,8 @@
   "description": "An application that builds an index from books in a file and allows you search through the file for words in the book.",
   "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "gulp browserify && karma start",
+    "start": "gulp"
   },
   "repository": {
     "type": "git",
@@ -22,16 +23,35 @@
   },
   "homepage": "https://github.com/andela-fmustapha/inverted-index#readme",
   "devDependencies": {
+    "browser-sync": "^2.18.8",
+    "eslint": "^3.18.0",
+    "eslint-config-airbnb-base": "^11.1.1",
+    "eslint-plugin-import": "^2.2.0",
     "gulp": "^3.9.1",
-    "gulp-eslint": "^3.0.1",
-    "gulp-util": "latest",
-    "gulp-nodemon": "^2.2.1",
     "gulp-connect": "latest",
+    "gulp-eslint": "^3.0.1",
+    "gulp-nodemon": "^2.2.1",
+    "gulp-util": "latest",
     "jasmine": "^2.5.3",
     "jasmine-core": "^2.5.2",
-    "karma-jasmine": "^0.1.0"
+    "jsdoc": "^3.4.3",
+    "karma": "^1.5.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-coverage": "^1.1.1",
+    "karma-coveralls": "^1.1.2",
+    "karma-jasmine": "^0.1.0",
+    "karma-verbose-reporter": "0.0.6",
+    "requirejs": "^2.3.3"
   },
   "dependencies": {
-    "gulp-util": "^3.0.8"
+    "connect": "^3.6.0",
+    "express": "^4.15.2",
+    "gulp-browserify": "^0.5.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-util": "^3.0.8",
+    "jasmine-core": "^2.5.2",
+    "object.values": "^1.0.4",
+    "path": "^0.12.7",
+    "serve-static": "^1.12.1"
   }
 }
