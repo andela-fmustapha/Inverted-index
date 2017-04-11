@@ -356,7 +356,7 @@ class InvertedIndex {
   }
 
   /**
-  *
+   *
    *
    * @param {Object} jsonContent - file content
    * @returns{Object} isValid - returns true and JSON content for valid files
@@ -529,7 +529,6 @@ class InvertedIndex {
     return this.searchIndices;
   }
 }
-
 module.exports.InvertedIndex = InvertedIndex;
 
 },{}]},{},[1])

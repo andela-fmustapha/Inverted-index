@@ -1,3 +1,5 @@
+/* eslint no-unused-vars:"off" */
+
 /**
  *
  * @class InvertedIndex
@@ -27,7 +29,7 @@ class InvertedIndex {
       try {
         const reader = new FileReader();
         reader.onload = (event) => {
-          fileContent = JSON.parse(event.target.result);
+          fileContent = event.target.result;
           const response = InvertedIndex.validateFile(fileContent);
           resolve(response);
         };
@@ -41,20 +43,29 @@ class InvertedIndex {
   /**
    *
    *
-   * @param {Object} jsonContent - file content
+   * @param {Object} fileContent - file content
    * @returns{Object} isValid - returns true and JSON content for valid files
    * and false for invalid files
    * @memberOf InvertedIndex
    */
-  static validateFile(jsonContent) {
-    let isValid = { status: false };
+  static validateFile(fileContent) {
+    let jsonContent = {};
+    let isValid = {
+      status: false
+    };
     const invalidStructureError = {
       name: 'validate file structure',
       message: 'File structure is invalid'
     };
     if (Object.keys(jsonContent).length === 0 &&
-       typeof jsonContent === 'object') {
+      typeof jsonContent === 'object') {
       return isValid;
+    }
+    try {
+      jsonContent = JSON.parse(fileContent);
+      isValid.status = true;
+    } catch (error) {
+      return;
     }
     try {
       jsonContent.forEach((doc) => {
@@ -65,6 +76,7 @@ class InvertedIndex {
             status: true,
             jsonContent
           };
+          console.log(isValid, 'isValid');
           return isValid;
         }
       });
@@ -149,7 +161,9 @@ class InvertedIndex {
       documentWords[keys].forEach((word) => {
         if (!Object.prototype.hasOwnProperty.call(indices, word)) {
           indices[word] = [Number(keys)];
-        } else { indices[word].push(Number(keys)); }
+        } else {
+          indices[word].push(Number(keys));
+        }
       });
     });
     this.indexedFiles[fileName] = indices;
@@ -213,3 +227,4 @@ class InvertedIndex {
   }
 }
 module.exports.InvertedIndex = InvertedIndex;
+
